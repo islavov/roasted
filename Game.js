@@ -46,7 +46,7 @@ BasicGame.Game.prototype = {
         burnlayer = this.map.createLayer("burning");
 
 
-        this.sprite = this.add.sprite(this.world.top, this.world.left, 'char');
+        this.sprite = this.add.sprite(64, this.world.height - 128, 'char');
         this.sprite.anchor.set(0.5);
         this.physics.arcade.enable(this.sprite);
         this.sprite.body.setSize(32, 32, 16, 16);
