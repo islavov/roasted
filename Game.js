@@ -27,8 +27,17 @@ BasicGame.Game = function (game) {
 
 BasicGame.Game.prototype = {
 
-    create: function () {
+    preload: function(){
+        this.load.image('tiles', 'tilemaps/tiles.png', 64, 64);
+        this.load.tilemap('level', 'tilemaps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+    },
 
+    create: function () {
+        this.stage.backgroundColor = "#000000";
+        this.map = this.add.tilemap("level");
+        this.map.addTilesetImage("tiles");
+        layer = this.map.createLayer("Tile Layer 1");
+        layer.resizeWorld();
         //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
 
     },
