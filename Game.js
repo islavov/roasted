@@ -32,6 +32,7 @@ BasicGame.Game.prototype = {
     preload: function(){
         this.load.image('tiles', 'tilemaps/tiles.png', 64, 64);
         this.load.image('char', 'images/charmanderd.png', 64, 64);
+        this.load.image('wood', 'images/wood.png', 64, 64);
         this.load.tilemap('level', 'tilemaps/level1.json', null, Phaser.Tilemap.TILED_JSON);
     },
 
@@ -42,47 +43,60 @@ BasicGame.Game.prototype = {
         this.world.setBounds(0, 0, 1920, 1024);
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        noburnlayer = this.map.createLayer("nonburning");
-        burnlayer = this.map.createLayer("burning");
+
+        this.nonburning = this.map.createLayer("nonburning");
+
+        this.burning_blocks = this.game.add.group();
+
+        this.map.createFromTiles(4, null, 'wood', 'burning', this.burning_blocks, {"customClass": burningBlock});
+        this.map.setCollisionBetween(1, 40);
 
 
-        this.sprite = this.add.sprite(64, this.world.height - 128, 'char');
-        this.sprite.anchor.set(0.5);
-        this.physics.arcade.enable(this.sprite);
-        this.sprite.body.setSize(32, 32, 16, 16);
+        this.player = this.add.sprite(64, this.world.height - 128, 'char');
 
-        //  We'll set a lower max angular velocity here to keep it from going totally nuts
-        this.sprite.body.maxAngular = 500;
 
-        //  Apply a drag otherwise the sprite will just spin and never slow down
-        this.sprite.body.angularDrag = 50;
+        this.physics.arcade.enable(this.player);
+	    this.physics.arcade.enable(this.nonburning);
+	    this.physics.arcade.enable(this.burning_blocks);
 
-        this.camera.follow(this.sprite);
+        this.player.body.setSize(32, 32, 16, 16);
+        this.player.body.bounce.y = 0.1;
+        this.player.body.gravity.y = 300;
+        this.player.body.collideWorldBounds = true;
+
+
+
+        this.camera.follow(this.player);
         this.cursors = this.input.keyboard.createCursorKeys();
 
     },
 
     update: function () {
+        this.physics.arcade.collide(this.player, this.burning_blocks, function(player, block){
+            block.startBurn();
+            player.body.blocked.down = player.body.touching.down;
+        });
+        this.physics.arcade.collide(this.player, this.nonburning);
 
-        this.sprite.body.velocity.x = 0;
-        this.sprite.body.velocity.y = 0;
-        this.sprite.body.angularVelocity = 0;
+        //  Reset the players velocity (movement)
+        this.player.body.velocity.x = 0;
 
-        if (this.cursors.left.isDown)
-        {
-            this.sprite.body.angularVelocity = -300;
+        if (this.cursors.left.isDown) {
+            // //  Move to the left
+            this.player.body.velocity.x = -450;
         }
-        else if (this.cursors.right.isDown)
-        {
-            this.sprite.body.angularVelocity = 300;
+        else if (this.cursors.right.isDown) {
+            //  Move to the right
+            this.player.body.velocity.x = 450;
         }
 
-        if (this.cursors.up.isDown)
-        {
-            this.physics.arcade.velocityFromAngle(this.sprite.angle, 300, this.sprite.body.velocity);
+        //  Allow the player to jump if they are touching the ground.
+        if (this.cursors.up.isDown && this.player.body.onFloor()) {
+            this.player.body.velocity.y = -300;
         }
-        //  Honestly, just about anything could go here. It's YOUR game after all. Eat your heart out!
-
+        if (this.cursors.down.isDown) {
+            this.player.body.velocity.y = 350;
+        }
     },
 
     render: function (){
