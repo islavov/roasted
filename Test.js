@@ -25,7 +25,7 @@ var platforms;
 
 function create() {
 	
-    player = new Player(game, 150, 0.5, -350, 0, 5000 );
+    player = new Player(game, 450, 0.1, -350, 0, 5000 );
 	
 	createMap();
 	

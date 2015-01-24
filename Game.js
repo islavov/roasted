@@ -34,7 +34,7 @@ BasicGame.Game.prototype = {
         this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
         this.load.image('bright', 'assets/butterRight.png', 32, 32);
         this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
-        this.load.image('chick', 'assets/chick.png', 32, 32);
+        this.load.atlasJSONHash('chick', 'assets/chick1.png', 'assets/chick1.json');
         this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
     },
 
@@ -56,7 +56,7 @@ BasicGame.Game.prototype = {
         this.map.setCollisionBetween(1, 40);
 
 
-        this.player = new Player(this, 550, 0.1, -450, 64, this.world.height - 128);
+        this.player = new Player(this.game, 550, 0.1, -450, 64, this.world.height - 128);
 
 
 	    this.physics.arcade.enable(this.nonburning);
@@ -76,7 +76,6 @@ BasicGame.Game.prototype = {
     },
 
     render: function (){
-        this.debug;
     },
 
     quitGame: function (pointer) {
