@@ -30,16 +30,19 @@ BasicGame.Game.prototype = {
     cursors: null,
 
     preload: function(){
-        this.load.image('tiles', 'tilemaps/tiles.png', 32, 32);
+        this.load.image('tiles', 'tilemaps/tiles.png');
+        this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
+        this.load.image('bright', 'assets/butterRight.png', 32, 32);
+        this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
         this.load.image('chick', 'assets/chick.png', 32, 32);
         this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
     },
 
     create: function () {
-        this.stage.backgroundColor = "#ffffff";
+        this.stage.backgroundColor = "#3f3f3f";
         this.map = this.add.tilemap("level");
         this.map.addTilesetImage("tiles");
-        this.world.setBounds(0, 0, 1920, 1024);
+        this.world.setBounds(0, 0, 640, 7030);
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -47,11 +50,13 @@ BasicGame.Game.prototype = {
 
         this.burning_blocks = this.game.add.group();
 
-        this.map.createFromTiles(4, null, 'butter', 'burning', this.burning_blocks, {"customClass": burningBlock});
+        this.map.createFromTiles(1, null, 'bleft', 'burning', this.burning_blocks, {"customClass": burningBlock});
+        this.map.createFromTiles(2, null, 'bmiddle', 'burning', this.burning_blocks, {"customClass": burningBlock});
+        this.map.createFromTiles(3, null, 'bright', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.setCollisionBetween(1, 40);
 
 
-        this.player = new Player(this, 350, 0.1, -350, 64, this.world.height - 128);
+        this.player = new Player(this, 550, 0.1, -450, 64, this.world.height - 128);
 
 
 	    this.physics.arcade.enable(this.nonburning);

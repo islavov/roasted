@@ -34,15 +34,15 @@
     {
          "firstgid":1,
          "image":"..\/..\/..\/Downloads\/map_tiles_2_1.png",
-         "imageheight":256,
-         "imagewidth":512,
-         "margin":1,
+         "imageheight":230,
+         "imagewidth":100,
+         "margin":0,
          "name":"tiles",
          "properties":
             {
 
             },
-         "spacing":1,
+         "spacing":0,
          "tileheight":32,
          "tilewidth":32
         }],
