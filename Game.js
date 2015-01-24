@@ -34,7 +34,12 @@ BasicGame.Game.prototype = {
         this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
         this.load.image('bright', 'assets/butterRight.png', 32, 32);
         this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
-        this.load.atlasJSONHash('chick', 'assets/chick1.png', 'assets/chick1.json');
+        this.load.atlasJSONHash('chick1', 'assets/chick1.png', 'assets/chick1.json');
+		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
+		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');
+		this.load.atlasJSONHash('chick4', 'assets/deadchick.png', 'assets/deadchick.json');
+		this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
+		this.load.atlasJSONHash('gas', 'assets/gas.png', 'assets/gas.json');
         this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
     },
 
@@ -72,6 +77,7 @@ BasicGame.Game.prototype = {
             player.body.blocked.down = player.body.touching.down;
         });
         this.physics.arcade.collide(this.player, this.nonburning);
+		this.player.updateState();
         this.player.movePlayer(this.cursors);
     },
 

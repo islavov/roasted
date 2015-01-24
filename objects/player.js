@@ -1,6 +1,6 @@
 Player = function (game, speed, bounce, velocity, xCord, yCord) {
 
-    Phaser.Sprite.call(this, game, xCord, yCord, 'chick');
+    Phaser.Sprite.call(this, game, xCord, yCord, 'chick1');
 
     this.speed = speed;
     this.velocity = velocity;
@@ -41,6 +41,26 @@ Player.prototype.getVelocity = function () {
 Player.prototype.kill = function(){
     this.game.state.start('Game');
 
+}
+Player.prototype.updateState= function() {
+	if (this.game.time.totalElapsedSeconds() > 2 && this.game.time.totalElapsedSeconds() < 5 && this.key != 'chick2')
+	{
+		this.loadTexture('chick2');
+		this.animations.add('overburn');
+		this.animations.play('overburn', 24, true);	
+	}
+	else if ( this.game.time.totalElapsedSeconds() > 5 && this.game.time.totalElapsedSeconds() < 8 && this.key != 'chick3' )
+	{
+		this.loadTexture('chick3');
+		this.animations.add('roasted');
+		this.animations.play('roasted', 24, true);	
+	}
+	else if ( this.game.time.totalElapsedSeconds() > 8 && this.key != 'chick4' )
+	{
+		this.loadTexture('chick4');
+		this.animations.add('dead');
+		this.animations.play('dead', 24, true);	
+	}
 }
 Player.prototype.Flip = function (orientation) {
     this.scale.x = orientation; //facing default direction
