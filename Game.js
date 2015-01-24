@@ -31,7 +31,7 @@ BasicGame.Game.prototype = {
 
     preload: function(){
         this.load.image('tiles', 'tilemaps/tiles.png', 64, 64);
-        this.load.image('char', 'images/charmanderd.png', 64, 64);
+        this.load.image('chick', 'assets/chick.png', 64, 64);
         this.load.image('wood', 'images/wood.png', 64, 64);
         this.load.tilemap('level', 'tilemaps/level1.json', null, Phaser.Tilemap.TILED_JSON);
     },
@@ -52,21 +52,12 @@ BasicGame.Game.prototype = {
         this.map.setCollisionBetween(1, 40);
 
 
-        this.player = this.add.sprite(64, this.world.height - 128, 'char');
+        this.player = new Player(this, 350, 0.1, -350, 64, this.world.height - 128);
 
 
-        this.physics.arcade.enable(this.player);
 	    this.physics.arcade.enable(this.nonburning);
 	    this.physics.arcade.enable(this.burning_blocks);
 
-        this.player.body.setSize(32, 32, 16, 16);
-        this.player.body.bounce.y = 0.1;
-        this.player.body.gravity.y = 300;
-        this.player.body.collideWorldBounds = true;
-
-
-
-        this.camera.follow(this.player);
         this.cursors = this.input.keyboard.createCursorKeys();
 
     },
@@ -77,26 +68,7 @@ BasicGame.Game.prototype = {
             player.body.blocked.down = player.body.touching.down;
         });
         this.physics.arcade.collide(this.player, this.nonburning);
-
-        //  Reset the players velocity (movement)
-        this.player.body.velocity.x = 0;
-
-        if (this.cursors.left.isDown) {
-            // //  Move to the left
-            this.player.body.velocity.x = -450;
-        }
-        else if (this.cursors.right.isDown) {
-            //  Move to the right
-            this.player.body.velocity.x = 450;
-        }
-
-        //  Allow the player to jump if they are touching the ground.
-        if (this.cursors.up.isDown && this.player.body.onFloor()) {
-            this.player.body.velocity.y = -300;
-        }
-        if (this.cursors.down.isDown) {
-            this.player.body.velocity.y = 350;
-        }
+        this.player.movePlayer(this.cursors);
     },
 
     render: function (){
