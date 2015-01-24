@@ -11,6 +11,7 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
     this.body.collideWorldBounds = true;
 
     game.add.existing(this);
+
     this.animations.add("burn");
     this.animations.play("burn", 24, true);
 
@@ -56,12 +57,6 @@ Player.prototype.movePlayer = function (cursors, velocity, flag) {
         //  Move to the right
         this.body.velocity.x = this.speed;
         this.Flip(-1);
-    }
-    else {
-        //  Stand still
-        this.animations.stop();
-
-        this.frame = 4;
     }
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && this.body.onFloor()) {
