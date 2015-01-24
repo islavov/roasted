@@ -6,11 +6,13 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
     this.velocity = velocity;
     game.physics.arcade.enable(this);
     this.body.gravity.y = 300;
-    this.body.bounce.set(0.5);
+    this.body.bounce.set(0.1);
     this.body.tilePadding.set(32);
     this.body.collideWorldBounds = true;
 
     game.add.existing(this);
+    this.animations.add("burn");
+    this.animations.play("burn", 24, true);
 
     game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);
 };
