@@ -20,7 +20,6 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
     game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);
     this.lastPositionY = this.position.y;
 
-
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -39,7 +38,10 @@ Player.prototype.setVelocity = function (velocity) {
 Player.prototype.getVelocity = function () {
     return this.velocity;
 };
+Player.prototype.kill = function(){
+    this.game.state.start('Game');
 
+}
 Player.prototype.Flip = function (orientation) {
     this.scale.x = orientation; //facing default direction
 }
@@ -74,5 +76,7 @@ Player.prototype.movePlayer = function (cursors, velocity, flag) {
     if (this.lastPositionY < this.position.y) {
         this.game.camera.unfollow();
     }
-
+    if (this.game.camera.y && this.body.position.y > this.game.camera.view.y + this.game.camera.view.height){
+        this.kill();
+    }
 }
