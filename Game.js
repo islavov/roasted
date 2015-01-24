@@ -56,7 +56,7 @@ BasicGame.Game.prototype = {
         this.map.setCollisionBetween(1, 40);
 
 
-        this.player = new Player(this.game, 550, 0.1, -450, 64, this.world.height - 128);
+        this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
 
 
 	    this.physics.arcade.enable(this.nonburning);

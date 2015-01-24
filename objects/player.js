@@ -8,6 +8,8 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
     this.body.gravity.y = 730;
     this.body.bounce.set(0.1);
     this.body.tilePadding.set(32);
+    this.anchor.setTo(.5, 1); //so it flips around its middle
+    this.scale.x = -1;
     this.body.collideWorldBounds = true;
 
     game.add.existing(this);
@@ -17,6 +19,7 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
 
     game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);
     this.lastPositionY = this.position.y;
+
 
 };
 
@@ -38,7 +41,6 @@ Player.prototype.getVelocity = function () {
 };
 
 Player.prototype.Flip = function (orientation) {
-    this.anchor.setTo(.5, 1); //so it flips around its middle
     this.scale.x = orientation; //facing default direction
 }
 
@@ -51,7 +53,6 @@ Player.prototype.movePlayer = function (cursors, velocity, flag) {
 
     if (cursors.left.isDown) {
         //  Move to the left
-        velocity *= -1;
         this.body.velocity.x = -this.speed;
         this.Flip(1);
     }
@@ -62,7 +63,7 @@ Player.prototype.movePlayer = function (cursors, velocity, flag) {
     }
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && this.body.onFloor()) {
-        this.body.velocity.y = -940;
+        this.body.velocity.y = -450;
 
     }
 
