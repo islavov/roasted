@@ -68,6 +68,10 @@ BasicGame.Game.prototype = {
 	    this.physics.arcade.enable(this.burning_blocks);
 
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.timerDisplay = this.game.add.text(0, 0, '',
+            { font: "30pt Courier", fill: "#19cb65",
+            stroke: "#119f4e", strokeThickness: 2 })
+        this.timerDisplay.fixedToCamera = true;
 
     },
 
@@ -77,8 +81,8 @@ BasicGame.Game.prototype = {
             player.body.blocked.down = player.body.touching.down;
         });
         this.physics.arcade.collide(this.player, this.nonburning);
-		this.player.updateState();
-        this.player.movePlayer(this.cursors);
+        this.player.updatePlayer(this.cursors);
+        this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
     },
 
     render: function (){
