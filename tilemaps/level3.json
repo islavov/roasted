@@ -31,55 +31,19 @@
  "renderorder":"right-down",
  "tileheight":32,
  "tilesets":[
-        {
+    {
          "firstgid":1,
-         "margin":0,
-         "name":"tilemap",
+         "image":"..\/..\/..\/Downloads\/map_tiles_2_1.png",
+         "imageheight":256,
+         "imagewidth":512,
+         "margin":1,
+         "name":"tiles",
          "properties":
             {
 
             },
-         "spacing":0,
+         "spacing":1,
          "tileheight":32,
-         "tiles":
-            {
-             "0":
-                {
-                 "image":"roasted\/roasted\/assets\/butterLeft.png"
-                },
-             "1":
-                {
-                 "image":"roasted\/roasted\/assets\/butterMiddle.png"
-                },
-             "2":
-                {
-                 "image":"roasted\/roasted\/assets\/butterRight.png"
-                },
-             "3":
-                {
-                 "image":"roasted\/roasted\/assets\/plateEndLeft.png"
-                },
-             "4":
-                {
-                 "image":"roasted\/roasted\/assets\/plateEndRight.png"
-                },
-             "5":
-                {
-                 "image":"roasted\/roasted\/assets\/plateLeft.png"
-                },
-             "6":
-                {
-                 "image":"roasted\/roasted\/assets\/plateMiddle.png"
-                },
-             "7":
-                {
-                 "image":"roasted\/roasted\/assets\/plateRight.png"
-                },
-             "8":
-                {
-                 "image":"roasted\/roasted\/assets\/texture.png"
-                }
-            },
          "tilewidth":32
         }],
  "tilewidth":32,

@@ -30,10 +30,9 @@ BasicGame.Game.prototype = {
     cursors: null,
 
     preload: function(){
-        this.load.image('tiles', 'tilemaps/tiles.png', 64, 64);
-        this.load.image('chick', 'assets/chick.png', 64, 64);
-        this.load.image('wood', 'images/wood.png', 64, 64);
-        this.load.tilemap('level', 'tilemaps/level1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.image('tiles', 'tilemaps/tiles.png', 32, 32);
+        this.load.image('chick', 'assets/chick.png', 32, 32);
+        this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
     },
 
     create: function () {
@@ -48,7 +47,7 @@ BasicGame.Game.prototype = {
 
         this.burning_blocks = this.game.add.group();
 
-        this.map.createFromTiles(4, null, 'wood', 'burning', this.burning_blocks, {"customClass": burningBlock});
+        this.map.createFromTiles(4, null, 'butter', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.setCollisionBetween(1, 40);
 
 
