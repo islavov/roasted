@@ -31,7 +31,7 @@ Player.prototype.constructor = Player;
 Player.prototype.kill = function(){
     this.loadTexture('chick4');
     this.animations.add('dead');
-    this.animations.play('dead', 24, true);
+    this.animations.play('dead', 16, true);
     this.lifespan = 0;
 //    this.game.state.start('Game');
 
@@ -52,13 +52,13 @@ Player.prototype.updateState = function() {
 	{
 		this.loadTexture('chick2');
 		this.animations.add('overburn');
-		this.animations.play('overburn', 24, true);	
+		this.animations.play('overburn', 30, true);
 	}
 	else if ( this.lifespan > 0 && this.lifespan < 10000  && this.key != 'chick3' )
 	{
 		this.loadTexture('chick3');
 		this.animations.add('roasted');
-		this.animations.play('roasted', 24, true);	
+		this.animations.play('roasted', 60, true);
 	}
 }
 Player.prototype.Flip = function (orientation) {
