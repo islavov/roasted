@@ -34,6 +34,9 @@ BasicGame.Game.prototype = {
         this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
         this.load.image('bright', 'assets/butterRight.png', 32, 32);
         this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
+        this.load.image('fbleft', 'assets/ice_butter/ice_butter_left.png', 32, 32);
+        this.load.image('fbright', 'assets/ice_butter/ice_butter_right.png', 32, 32);
+        this.load.image('fbmiddle', 'assets/ice_butter/ice_butter_middle.png', 32, 32);
         this.load.atlasJSONHash('chick1', 'assets/chick1.png', 'assets/chick1.json');
 		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
 		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');
@@ -54,6 +57,7 @@ BasicGame.Game.prototype = {
         this.nonburning = this.map.createLayer("nonburning");
 
         this.burning_blocks = this.game.add.group();
+        this.powerups = this.game.add.group();
 
         this.map.createFromTiles(1, null, 'bleft', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.createFromTiles(2, null, 'bmiddle', 'burning', this.burning_blocks, {"customClass": burningBlock});
@@ -61,6 +65,8 @@ BasicGame.Game.prototype = {
         this.map.setCollisionBetween(1, 40);
 
 
+        var iceblock = new blockIce(this.game, 350, this.world.height - 86, "cubeice");
+        this.powerups.add(iceblock);
         this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
 
 
@@ -76,11 +82,16 @@ BasicGame.Game.prototype = {
     },
 
     update: function () {
+        var that = this;
         this.physics.arcade.collide(this.player, this.burning_blocks, function(player, block){
             block.startBurn();
             player.body.blocked.down = player.body.touching.down;
         });
         this.physics.arcade.collide(this.player, this.nonburning);
+        this.physics.arcade.collide(this.player, this.powerups, function(player, powerup){
+            powerup.apply(that, player)
+        });
+
         this.player.updatePlayer(this.cursors);
         this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
     },
