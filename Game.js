@@ -1,4 +1,3 @@
-
 BasicGame.Game = function (game) {
 
     //  When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
@@ -29,22 +28,20 @@ BasicGame.Game.prototype = {
 
     cursors: null,
 
-    preload: function(){
-		// this.load.audio('chirp1', 'sounds/cluck1.mp3');
-		// this.load.audio('chirp2', 'sounds/cluck2.mp3');
-		// this.load.audio('chirp3', 'sounds/cluck3.mp3');
-    },
-
     create: function () {
         this.stage.backgroundColor = "#3f3f3f";
         this.map = this.add.tilemap("level");
         this.map.addTilesetImage("tiles");
         this.world.setBounds(0, 0, 640, 7030);
-		
-		// chirpLeft = game.add.audio('chirp1');
-		// chirpRight = game.add.audio('chirp2');
-		// chirpUp = game.add.audio('chirp3');
-		
+
+        chirpLeft = this.add.audio('chirp1');
+        chirpRight = this.add.audio('chirp2');
+        chirpUp = this.add.audio('chirp3');
+        success = this.add.audio('success');
+        microwave = this.add.audio('microwave');
+        dnb = this.add.audio('dnb');
+
+        dnb.play();
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.nonburning = this.map.createLayer("nonburning");
@@ -62,28 +59,31 @@ BasicGame.Game.prototype = {
         this.map.createFromTiles(3, null, 'bright', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.setCollisionBetween(1, 40);
 
-		this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
-		
-		for( i=0; i<100; i++)
-		{
-			if ( i%2 == 0 )
-			{
-				var iceblock = new blockIce(this.game, this.game.world.randomX, this.game.world.randomY, "cubeice");
-				this.powerups.add(iceblock);
-			}
-			else {
-				var gastube = new gasTube(this.game, this.game.world.randomX, this.game.world.randomY, "gas");
-				this.powerups.add(gastube);
-			}
-		}
+        this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
 
-	    this.physics.arcade.enable(this.nonburning);
-	    this.physics.arcade.enable(this.burning_blocks);
+        for (i = 0; i < 60; i++) {
+            var modi = i % 3;
+            if (modi == 0) {
+                var iceblock = new blockIce(this.game, this.game.world.randomX, this.game.world.randomY, "cubeice");
+                this.powerups.add(iceblock);
+            }
+            else if (modi == 1){
+                var watercup = new waterCup(this.game, this.game.world.randomX, this.game.world.randomY, "water");
+                this.powerups.add(watercup);
+            }
+            else {
+                var gastube = new gasTube(this.game, this.game.world.randomX, this.game.world.randomY, "gas");
+                this.powerups.add(gastube);
+            }
+        }
+
+        this.physics.arcade.enable(this.nonburning);
+        this.physics.arcade.enable(this.burning_blocks);
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.timerDisplay = this.game.add.text(0, 0, '',
             { font: "30pt Courier", fill: "#19cb65",
-            stroke: "#119f4e", strokeThickness: 2 })
+                stroke: "#119f4e", strokeThickness: 2 })
         this.timerDisplay.fixedToCamera = true;
 
 
@@ -95,28 +95,27 @@ BasicGame.Game.prototype = {
         this.anykey.visible = false;
 
 
-
     },
 
     update: function () {
         var that = this;
-        this.physics.arcade.collide(this.player, this.burning_blocks, function(player, block){
+        this.physics.arcade.collide(this.player, this.burning_blocks, function (player, block) {
             block.startBurn();
             player.body.blocked.down = player.body.touching.down;
         });
         this.physics.arcade.collide(this.player, this.nonburning);
-        this.physics.arcade.collide(this.player, this.powerups, function(player, powerup){
+        this.physics.arcade.collide(this.player, this.powerups, function (player, powerup) {
             powerup.apply(that, player)
+            success.play();
         });
-		this.physics.arcade.collide(this.powerups, this.nonburning);
-		this.physics.arcade.collide(this.powerups, this.burning_blocks);
+        this.physics.arcade.collide(this.powerups, this.nonburning);
+        this.physics.arcade.collide(this.powerups, this.burning_blocks);
 
         this.player.updatePlayer(this.cursors);
-        this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
-
+        this.timerDisplay.setText(parseInt(this.player.lifespan / 1000));
     },
 
-    render: function (){
+    render: function () {
     },
 
     quitGame: function (pointer) {

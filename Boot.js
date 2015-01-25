@@ -55,9 +55,20 @@ BasicGame.Boot.prototype = {
 		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
 		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');
 		this.load.atlasJSONHash('chick4', 'assets/deadchick.png', 'assets/deadchick.json');
-		this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
+
+        this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
+		this.load.atlasJSONHash('water', 'assets/watercup.png', 'assets/watercup.json');
 		this.load.atlasJSONHash('gas', 'assets/gas.png', 'assets/gas.json');
+
         this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
+
+
+        this.load.audio('chirp1', 'sounds/cluck1.mp3');
+		this.load.audio('chirp2', 'sounds/cluck2.mp3');
+		this.load.audio('chirp3', 'sounds/cluck3.mp3');
+		this.load.audio('success', 'sounds/success.mp3');
+		this.load.audio('microwave', 'sounds/microwave.mp3');
+		this.load.audio('dnb', 'sounds/background.mp3');
 
 
     },
