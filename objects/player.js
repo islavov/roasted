@@ -62,7 +62,13 @@ Player.prototype.updatePlayer = function(cursors){
 }
 
 Player.prototype.updateState = function() {
-	if (this.lifespan > 10000 && this.lifespan < 20000 && this.key != 'chick2')
+	if(this.lifespan > 20000 && this.key != 'chick1')
+	{
+		this.loadTexture('chick1');
+		this.animations.add('burn');
+		this.animations.play('burn', 24, true);
+	}
+	else if (this.lifespan > 10000 && this.lifespan < 20000 && this.key != 'chick2')
 	{
 		this.loadTexture('chick2');
 		this.animations.add('overburn');
