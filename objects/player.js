@@ -37,6 +37,10 @@ Player.prototype.kill = function(){
 
 }
 
+Player.prototype.updateSpeed = function(newSpeed) {
+	this.speed = newSpeed;
+	}
+	
 Player.prototype.updatePlayer = function(cursors){
     this.updateState();
     if (this.lifespan <= 0){
@@ -76,6 +80,7 @@ Player.prototype.movePlayer = function (cursors, velocity, flag) {
         //  Move to the left
         this.body.velocity.x = -this.speed;
         this.Flip(1);
+		
     }
     else if (cursors.right.isDown) {
         //  Move to the right

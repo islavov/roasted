@@ -2,6 +2,7 @@ var BasicGame = {};
 
 BasicGame.Boot = function (game) {
 
+	
 };
 
 BasicGame.Boot.prototype = {
@@ -34,6 +35,8 @@ BasicGame.Boot.prototype = {
     preload: function () {
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
+		this.load.atlasJSONHash('loading', 'assets/title.png', 'assets/title.json');
+		
         this.load.image('preloaderBackground', 'images/preloader_background.jpg');
         this.load.image('preloaderBar', 'images/preloadr_bar.png');
 
@@ -42,9 +45,21 @@ BasicGame.Boot.prototype = {
     create: function () {
 
         //  By this point the preloader assets have loaded to the cache, we've set the game settings
+		
+		var title = this.add.sprite(0,0, 'loading');
+		title.animations.add('load');
+		title.animations.play('load',24,true);
+		
+		var space_key = this.game.input;
+		space_key.onDown.add(this.start, this);
+		
         //  So now let's start the real preloader going
-        this.state.start('Preloader');
+        
 
-    }
+    },
+	
+	start: function () {
+		this.game.state.start('Game');
+	}
 
 };
