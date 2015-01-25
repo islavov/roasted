@@ -28,7 +28,7 @@ powerUp = function(game, x, y, key, frame){
     game.physics.arcade.enable(this);
 	
 	this.active = false;
-    this.body.immovable = true;
+    this.body.immovable = false;
 	this.body.gravity.y = 300;
 	this.animations.add('anim');
 	this.animations.play('anim',10,true);
@@ -53,12 +53,12 @@ blockIce.prototype.constructor = powerUp;
 blockIce.prototype.apply = function(game, player){
     this.kill();
 
-		for (var bidx in game.burning_blocks.children){
-			var child = game.burning_blocks.children[bidx];
-			child.loadTexture("f" + child.initialKey);
-			child.resistent = true;
-		}
-		this.game.time.events.add(Phaser.Timer.SECOND * 10, this.revert, this, game, player);
+    for (var bidx in game.burning_blocks.children){
+        var child = game.burning_blocks.children[bidx];
+        child.loadTexture("f" + child.initialKey);
+        child.resistent = true;
+    }
+    this.game.time.events.add(Phaser.Timer.SECOND * 10, this.revert, this, game, player);
 	
 }
 blockIce.prototype.revert = function(game, player){
@@ -79,10 +79,10 @@ gasTube.prototype = Object.create(powerUp.prototype);
 gasTube.prototype.constructor = powerUp;
 gasTube.prototype.apply = function(game, player) {
 	this.kill();
-		player.updateSpeed(850);
-		
-		this.game.time.events.add(Phaser.Timer.SECOND * 10, this.revert, this, game, player);
-	}
+    player.updateSpeed(850);
+
+    this.game.time.events.add(Phaser.Timer.SECOND * 10, this.revert, this, game, player);
+}
 
 
 
