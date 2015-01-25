@@ -30,20 +30,6 @@ BasicGame.Game.prototype = {
     cursors: null,
 
     preload: function(){
-        this.load.image('tiles', 'tilemaps/tiles.png');
-        this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
-        this.load.image('bright', 'assets/butterRight.png', 32, 32);
-        this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
-        this.load.image('fbleft', 'assets/ice_butter/ice_butter_left.png', 32, 32);
-        this.load.image('fbright', 'assets/ice_butter/ice_butter_right.png', 32, 32);
-        this.load.image('fbmiddle', 'assets/ice_butter/ice_butter_middle.png', 32, 32);
-        this.load.atlasJSONHash('chick1', 'assets/chick1.png', 'assets/chick1.json');
-		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
-		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');
-		this.load.atlasJSONHash('chick4', 'assets/deadchick.png', 'assets/deadchick.json');
-		this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
-		this.load.atlasJSONHash('gas', 'assets/gas.png', 'assets/gas.json');
-        this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
 		// this.load.audio('chirp1', 'sounds/cluck1.mp3');
 		// this.load.audio('chirp2', 'sounds/cluck2.mp3');
 		// this.load.audio('chirp3', 'sounds/cluck3.mp3');
@@ -64,7 +50,12 @@ BasicGame.Game.prototype = {
         this.nonburning = this.map.createLayer("nonburning");
 
         this.burning_blocks = this.game.add.group();
+        this.burning_blocks.enableBody = true;
+        this.burning_blocks.physicsBodyType = Phaser.Physics.ARCADE;
+
         this.powerups = this.game.add.group();
+        this.powerups.enableBody = true;
+        this.powerups.physicsBodyType = Phaser.Physics.ARCADE;
 
         this.map.createFromTiles(1, null, 'bleft', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.createFromTiles(2, null, 'bmiddle', 'burning', this.burning_blocks, {"customClass": burningBlock});
@@ -108,8 +99,7 @@ BasicGame.Game.prototype = {
             powerup.apply(that, player)
         });
 		this.physics.arcade.collide(this.powerups, this.nonburning);
-		//needs work
-		this.physics.arcade.overlap(this.powerups, this.burning_blocks);
+		this.physics.arcade.collide(this.powerups, this.burning_blocks);
 
         this.player.updatePlayer(this.cursors);
         this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
