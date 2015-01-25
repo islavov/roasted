@@ -86,6 +86,16 @@ BasicGame.Game.prototype = {
             stroke: "#119f4e", strokeThickness: 2 })
         this.timerDisplay.fixedToCamera = true;
 
+
+        this.deadScreen = this.add.sprite(0, 0, 'deadScreen');
+        this.deadScreen.fixedToCamera = true;
+        this.deadScreen.visible = false;
+
+        this.anykey = this.add.sprite(100, 240, 'deadAnyKey');
+        this.anykey.visible = false;
+
+
+
     },
 
     update: function () {
@@ -103,6 +113,7 @@ BasicGame.Game.prototype = {
 
         this.player.updatePlayer(this.cursors);
         this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
+
     },
 
     render: function (){

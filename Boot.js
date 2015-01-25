@@ -48,6 +48,9 @@ BasicGame.Boot.prototype = {
         this.load.image('menuScreen', 'assets/startScreen/startScreenBg.png');
         this.load.image('menuAnyKey', 'assets/startScreen/anyKeyText.png');
 
+        this.load.image('deadScreen', 'assets/deadScreen/deadScreenBg.png');
+        this.load.image('deadAnyKey', 'assets/deadScreen/tryAgainText.png');
+
         this.load.atlasJSONHash('chick1', 'assets/chick1.png', 'assets/chick1.json');
 		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
 		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');

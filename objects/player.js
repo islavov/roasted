@@ -33,8 +33,6 @@ Player.prototype.kill = function(){
     this.animations.add('dead');
     this.animations.play('dead', 16, true);
     this.lifespan = 0;
-//    this.game.state.start('Game');
-
 }
 
 Player.prototype.updateSpeed = function(newSpeed) {
