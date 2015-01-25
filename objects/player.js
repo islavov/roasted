@@ -34,8 +34,13 @@ Player.prototype.kill = function(){
     this.animations.play('dead', 16, true);
     this.lifespan = 0;
 	microwave.play();
-//    this.game.state.start('Game');
 
+    originaCallback = this.game.input.keyboard.onDownCallback;
+    var that = this;
+    this.game.input.keyboard.onDownCallback = function (e){
+        that.game.input.keyboard.onDownCallback = originaCallback;
+        that.game.state.start('GameOver');
+    }
 }
 
 Player.prototype.updateSpeed = function(newSpeed) {
@@ -125,6 +130,5 @@ Player.prototype.movePlayer = function (cursors) {
     }
     if (this.game.camera.y && this.body.position.y > this.game.camera.view.y + this.game.camera.view.height){
         this.kill();
-		microwave.play();
     }
 }
