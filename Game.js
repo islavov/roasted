@@ -44,6 +44,9 @@ BasicGame.Game.prototype = {
 		this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
 		this.load.atlasJSONHash('gas', 'assets/gas.png', 'assets/gas.json');
         this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
+		// this.load.audio('chirp1', 'sounds/cluck1.mp3');
+		// this.load.audio('chirp2', 'sounds/cluck2.mp3');
+		// this.load.audio('chirp3', 'sounds/cluck3.mp3');
     },
 
     create: function () {
@@ -51,7 +54,11 @@ BasicGame.Game.prototype = {
         this.map = this.add.tilemap("level");
         this.map.addTilesetImage("tiles");
         this.world.setBounds(0, 0, 640, 7030);
-
+		
+		// chirpLeft = game.add.audio('chirp1');
+		// chirpRight = game.add.audio('chirp2');
+		// chirpUp = game.add.audio('chirp3');
+		
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.nonburning = this.map.createLayer("nonburning");
@@ -64,11 +71,20 @@ BasicGame.Game.prototype = {
         this.map.createFromTiles(3, null, 'bright', 'burning', this.burning_blocks, {"customClass": burningBlock});
         this.map.setCollisionBetween(1, 40);
 
-
-        var iceblock = new blockIce(this.game, 350, this.world.height - 86, "cubeice");
-        this.powerups.add(iceblock);
-        this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
-
+		this.player = new Player(this.game, 550, 0.1, -450, 0, this.world.height - 24);
+		
+		for( i=0; i<100; i++)
+		{
+			if ( i%2 == 0 )
+			{
+				var iceblock = new blockIce(this.game, this.game.world.randomX, this.game.world.randomY, "cubeice");
+				this.powerups.add(iceblock);
+			}
+			else {
+				var gastube = new gasTube(this.game, this.game.world.randomX, this.game.world.randomY, "gas");
+				this.powerups.add(gastube);
+			}
+		}
 
 	    this.physics.arcade.enable(this.nonburning);
 	    this.physics.arcade.enable(this.burning_blocks);
@@ -91,6 +107,9 @@ BasicGame.Game.prototype = {
         this.physics.arcade.collide(this.player, this.powerups, function(player, powerup){
             powerup.apply(that, player)
         });
+		this.physics.arcade.collide(this.powerups, this.nonburning);
+		//needs work
+		this.physics.arcade.overlap(this.powerups, this.burning_blocks);
 
         this.player.updatePlayer(this.cursors);
         this.timerDisplay.setText(parseInt(this.player.lifespan / 1000) );
