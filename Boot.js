@@ -36,9 +36,26 @@ BasicGame.Boot.prototype = {
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
 		this.load.atlasJSONHash('loading', 'assets/title.png', 'assets/title.json');
-		
-        this.load.image('preloaderBackground', 'images/preloader_background.jpg');
-        this.load.image('preloaderBar', 'images/preloadr_bar.png');
+
+        this.load.image('tiles', 'tilemaps/tiles.png');
+        this.load.image('bleft', 'assets/butterLeft.png', 32, 32);
+        this.load.image('bright', 'assets/butterRight.png', 32, 32);
+        this.load.image('bmiddle', 'assets/butterMiddle.png', 32, 32);
+        this.load.image('fbleft', 'assets/ice_butter/ice_butter_left.png', 32, 32);
+        this.load.image('fbright', 'assets/ice_butter/ice_butter_right.png', 32, 32);
+        this.load.image('fbmiddle', 'assets/ice_butter/ice_butter_middle.png', 32, 32);
+
+        this.load.image('menuScreen', 'assets/startScreen/startScreenBg.png');
+        this.load.image('menuAnyKey', 'assets/startScreen/anyKeyText.png');
+
+        this.load.atlasJSONHash('chick1', 'assets/chick1.png', 'assets/chick1.json');
+		this.load.atlasJSONHash('chick2', 'assets/overburn.png', 'assets/overburn.json');
+		this.load.atlasJSONHash('chick3', 'assets/roasted.png', 'assets/roasted.json');
+		this.load.atlasJSONHash('chick4', 'assets/deadchick.png', 'assets/deadchick.json');
+		this.load.atlasJSONHash('cubeice', 'assets/cubeice.png', 'assets/cubeice.json');
+		this.load.atlasJSONHash('gas', 'assets/gas.png', 'assets/gas.json');
+        this.load.tilemap('level', 'tilemaps/level3.json', null, Phaser.Tilemap.TILED_JSON);
+
 
     },
 
@@ -46,20 +63,18 @@ BasicGame.Boot.prototype = {
 
         //  By this point the preloader assets have loaded to the cache, we've set the game settings
 		
-		var title = this.add.sprite(0,0, 'loading');
+		var title = this.add.sprite(0, 0, 'loading');
 		title.animations.add('load');
 		title.animations.play('load',24,true);
-		
-		var space_key = this.game.input;
-		space_key.onDown.add(this.start, this);
-		
+
         //  So now let's start the real preloader going
-        
+
+        this.game.time.events.add(Phaser.Timer.SECOND * 2, this.gotoMainMenu, this);
 
     },
 	
-	start: function () {
-		this.game.state.start('Game');
+	gotoMainMenu: function () {
+		this.game.state.start('MainMenu');
 	}
 
 };
