@@ -42,6 +42,7 @@ BasicGame.Game.prototype = {
         dnb = this.add.audio('dnb');
 
         dnb.play();
+		dnb.volume = 0.6;
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         this.nonburning = this.map.createLayer("nonburning");

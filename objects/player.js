@@ -95,6 +95,7 @@ Player.prototype.movePlayer = function (cursors) {
     if (cursors.left.isDown) {
         //  Move to the left
 		chirpLeft.play();
+		chirpLeft.volume=0.3;
 		this.velocity *= -1;
         this.body.velocity.x = -this.speed;
         this.Flip(1);
@@ -103,6 +104,7 @@ Player.prototype.movePlayer = function (cursors) {
     else if (cursors.right.isDown) {
         //  Move to the right
 		chirpRight.play();
+		chirpRight.volume=0.3;
         this.body.velocity.x = this.speed;
         this.Flip(-1);
     }
@@ -110,6 +112,8 @@ Player.prototype.movePlayer = function (cursors) {
     if (cursors.up.isDown && this.body.onFloor()) {
         this.body.velocity.y = -450;
 		chirpUp.play();
+		chirpUp.volume=0.3;
+		
 
     }
     if (this.lastPositionY > this.position.y){
