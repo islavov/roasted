@@ -8,6 +8,8 @@ Player = function (game, speed, bounce, velocity, xCord, yCord) {
 	this.flag = false;
     this.lifespan = 30000;
 
+    this.score
+
     this.body.gravity.y = 730;
     this.body.bounce.set(0.1);
     this.body.tilePadding.set(32);
@@ -39,7 +41,7 @@ Player.prototype.kill = function(){
     var that = this;
     this.game.input.keyboard.onDownCallback = function (e){
         that.game.input.keyboard.onDownCallback = originaCallback;
-        that.game.state.start('GameOver');
+        that.game.state.start('Game');
     }
 }
 
